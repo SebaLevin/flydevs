@@ -14,7 +14,7 @@ mongoose.connect(process.env.DATA_BASE, {
     }  
 );
 
-mongoose.connection.once('open', () => {
+mongoose.connection.once("open", () => {
     console.log("MongoDB Connected!")
 });
 
@@ -23,8 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
+require("./models/User")
 app.use(routes)
 
 app.listen(port, () => {
-    console.log("Server running on port: ", port)
+    console.log("Server running on port:", port)
 });
