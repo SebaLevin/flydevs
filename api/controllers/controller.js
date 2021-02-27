@@ -25,27 +25,39 @@ exports.newUser = async (req, res) => {
             message: "The lastname field cannot be empty"
         })
     }
-
         await user.save();
-
     
-
     res.json({
         message: "User created succesfully!",
     });
-
 };
+
+exports.updateUser =  async (req, res) => {
+    const { id } = req.params;
+    
+    try{
+        await User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+        res.send({ message: "User was updated successfully." });
+    }catch(error){
+        res.status(404).json({
+            message: error.message
+        })
+    }
+}
+
 
 exports.deleteUser = async (req, res) => {
     const { id } = req.params;
 
-    await User.remove({ _id: id }, 
-    function(err) { 
-            if (!err) { 
-                console.log('ando'); 
-            } 
-            else { 
-                console.log('no ando'); 
-            } 
-        }); 
+    try{
+        await User.deleteOne({ _id: id })
+        res.status(200).json({
+            message: "User deleted succesfully"
+        });
+    }
+    catch(error){
+        res.status(404).json({
+            message: error.message
+        })
+    };
 }
