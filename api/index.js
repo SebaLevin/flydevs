@@ -1,31 +1,32 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const { graphqlHTTP } = require('express-graphql')
+const Connect = require("./db/connection");
 const app = express();
-const routes = require("./routes/routes.js");
+const schema = require("./graphQL/schema.js")
 require("dotenv").config();
 
+//Settign up port
 const port = process.env.PORT || 8080;
 
-mongoose.connect(process.env.DATA_BASE, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-    }  
-);
+//Connecting to DataBase
+Connect.connect();
+Connect.connection();
 
-mongoose.connection.once("open", () => {
-    console.log("MongoDB Connected!")
-});
-
+//Middlewares
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-require("./models/User")
-app.use(routes)
+//GraphQL config
+app.use('/graphql', graphqlHTTP({
+    graphiql: true,
+    schema: schema
+}))
 
+//Server Running
 app.listen(port, () => {
     console.log("Server running on port:", port)
 });
