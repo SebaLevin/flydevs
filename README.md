@@ -15,8 +15,10 @@
     <li>docker-compose build</li>
 </ul>
 
+<h4>GraphQL Querys</h4>
+<p> On file "src/docs" are all the querys and mutations documanted for easy use</p>
 
-<h3>Dependencies used</h3>
+<h5>Dependencies used</h5>
 <ul>
     <li>apollo-server-express</li>
     <li>grapqhl</li>
