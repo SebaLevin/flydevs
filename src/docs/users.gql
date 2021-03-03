@@ -1,6 +1,6 @@
 # Mutation to Create a new User
 mutation NEW_USER($name: String!, $lastName: String!, $age: Int) {
-    createPost(newPost: { name: $name, lastName: $lastName, age: $age }) {
+    createUser(newUser: { name: $name, lastName: $lastName, age: $age }) {
             _id
             name
             lastName
@@ -18,9 +18,12 @@ query ALL_USERS {
     }
 }
 
-# Query to Fetch single User by ID
-query USER_BY_ID($_id: ID!) {
-    getUserById(_id: $id) {
+# Query to Fetch all Users that match the filter
+query USER_BY_NAME($name: String!) {
+    
+    getFilteredUsers(
+        filter: $name
+        ) {
         _id
         name
         lastName
@@ -43,5 +46,20 @@ mutation UPDATE_USER_BY_ID(
         name
         lastName
         age
+    }
+}
+
+# Mutation to Delete the User (Authentication Required)
+mutation DELETE_USER_BY_ID(
+    $_id: ID!
+)   {
+    deleteUser(
+        _id: $id
+        deleteUser: { _id: $id }
+    ) {
+        _id
+        message
+        success
+        }
     }
 }
