@@ -1,0 +1,47 @@
+# Mutation to Create a new User
+mutation NEW_USER($name: String!, $lastName: String!, $age: Int) {
+    createPost(newPost: { name: $name, lastName: $lastName, age: $age }) {
+            _id
+            name
+            lastName
+            age
+        }
+    }
+
+# Query to Fetch all the Users
+query ALL_USERS {
+    allUsers {
+        _id
+        name
+        lastName
+        age
+    }
+}
+
+# Query to Fetch single User by ID
+query USER_BY_ID($_id: ID!) {
+    getUserById(_id: $id) {
+        _id
+        name
+        lastName
+        age
+    }
+}
+
+# Mutation to Update the User (Authentication Required)
+mutation UPDATE_USER_BY_ID(
+    $_id: ID!
+    $name: String!
+    $lastName: String!
+    $age: String
+)   {
+    updateUser(
+        _id: $id
+        updatedUser: { name: $name, lastName: $lastName, age: $age }
+    ) {
+        _id
+        name
+        lastName
+        age
+    }
+}

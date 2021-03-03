@@ -1,0 +1,37 @@
+# Mutation to Register a new Admin in the Database
+mutation REGISTER_ADMIN(
+    $email: String!
+    $password: String!
+    ) {
+    registerAdmin(
+    newAdmin: {
+        email: $email
+        password: $password
+    }
+    ) {
+    token
+    admin {
+        id
+        email
+        }
+    }
+}
+
+# Query to Authenticate the Admin
+query LOGIN_ADMIN($username: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+        token
+        admin {
+            id
+            email
+        }
+    }
+}
+
+# Query to Fetch the Authenticated Admin by Token
+query AUTH_ADMIN {
+    authAdmin {
+        id
+        email
+    }
+}
